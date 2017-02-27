@@ -1,0 +1,21 @@
+.title {
+  margin-top: 20px;
+}
+
+.card {
+  border: 1px solid #ecf0f1;
+  margin-top: 10px;
+}
+
+.card-header {
+  background-color: #3498db;
+  border-bottom: 1px solid #ecf0f1;
+  font-size: 16px;
+  padding: 10px;
+  color: white;
+  font-family: Helvetica, sans-serif;
+}
+
+.card-content {
+  padding: 10px;
+}
