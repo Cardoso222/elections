@@ -1,0 +1,37 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="large-4 columns large-centered">
+    <div class="login-box">
+      <div class="login-header">
+        <h1>Login</h1>
+      </div>
+      <form action="/authenticate" method="POST">
+        Matricula: <input type="text" name="registration"> 
+        Senha: <input id="passwordInput" type="password" name="password"> 
+
+        <div class="row">
+          <div class="large-6 columns">
+            <input id="showPassword" type="checkbox"> Exibir senha? 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <input type="submit" class="full-width primary button" value="ENTRAR">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-8 columns large-centered">
+            <a href="#">Esqueceu sua senha?</a>
+          </div>
+        </div>
+
+      </form>
+    </div> 
+  </div>
+</div>
+{% endblock %} 
+
