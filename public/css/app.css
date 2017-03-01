@@ -5,3 +5,11 @@
 .margin-top-10 {
   margin-top: 10px;
 }
+
+.error-msg {
+  background-color: #f04124;
+  color: #FFFFFF;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}

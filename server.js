@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 
 var user = require('./controllers/user');
+var election = require('./controllers/elections');
 var app = express();
 
 app.use(expressSession({
@@ -27,7 +28,7 @@ app.use(bodyParser.json())
 
 
 app.get('/login', function (req, res) {
-  res.render('login.html');
+  res.render('login.html', {session: req.session});
 });
 
 app.post('/authenticate', user.authenticate); 
@@ -39,9 +40,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/dashboard', function (req, res) {
-  res.render('user-dashboard.html');
-});
+app.get('/dashboard', user.dashboard);
 
 app.get('/election/:url_friendly', function (req, res) {
   res.render('election.html');

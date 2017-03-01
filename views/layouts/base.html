@@ -1,6 +1,5 @@
 <html>
-  <body>
-  {% block header %}
+  {% block head %}
     <head>
       <meta charset="utf-8">
       <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -12,18 +11,16 @@
       <link rel="stylesheet" href="css/user-dashboard.css">
     </head>
   {% endblock %}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             </div>
+  <body>
+    {% block content %}
+    {% endblock %}
 
-  {% block content %}
-  {% endblock %}
-
-  {% block footer %}
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/vendor/what-input.js"></script>
-    <script src="js/vendor/foundation.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/login.js"></script>
-  {% endblock %}
-
+    {% block scripts %}
+      <script src="js/vendor/jquery.js"></script>
+      <script src="js/vendor/what-input.js"></script>
+      <script src="js/vendor/foundation.js"></script>
+      <script src="js/app.js"></script>
+    {% endblock %}
   </body>
 </html>
-

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node_modules/nodemon/bin/nodemon.js server.js"
+    "start": "node_modules/nodemon/bin/nodemon.js server.js -e html"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +14,7 @@
     "express": "^4.14.1",
     "express-session": "^1.15.1",
     "nodemon": "^1.11.0",
-    "nunjucks": "^3.0.0"
+    "nunjucks": "^3.0.0",
+    "sequelize": "^3.30.2"
   }
 }

@@ -7,6 +7,11 @@
       <div class="login-header">
         <h1>Login</h1>
       </div>
+      {% if session.error == true %}
+        <div class="error-msg">
+          <span> Matricula ou Senha incorretos </span>
+        </div>
+      {% endif %}
       <form action="/authenticate" method="POST">
         Matricula: <input type="text" name="registration"> 
         Senha: <input id="passwordInput" type="password" name="password"> 
@@ -35,3 +40,6 @@
 </div>
 {% endblock %} 
 
+{% block scripts %}
+  <script src="js/login.js"></script>
+{% endblock %}
