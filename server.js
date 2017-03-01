@@ -6,6 +6,7 @@ var path = require('path');
 
 var user = require('./controllers/user');
 var election = require('./controllers/elections');
+var candidates = require('./controllers/candidates');
 var app = express();
 
 app.use(expressSession({
@@ -17,10 +18,11 @@ app.use(expressSession({
   })
 );
 
-nunjucks.configure('views', {
+var nunjucksEnv = nunjucks.configure('views', {
   autoescape: true,
   express: app
 });
+require('./config/nunjucksFilters.js')(nunjucksEnv);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -42,9 +44,7 @@ app.use(function(req, res, next) {
 
 app.get('/dashboard', user.dashboard);
 
-app.get('/election/:url_friendly', function (req, res) {
-  res.render('election.html');
-});
+app.get('/election/:url_friendly', candidates.all);
 
 app.listen(3000, function () {
   console.log('server listening on port 3000!');

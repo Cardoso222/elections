@@ -18,7 +18,7 @@ module.exports.authenticate = function(req, res) {
 };
 
 module.exports.dashboard = function(req, res) {
-  db.connection.query('SELECT * FROM elections', 
+  db.connection.query('SELECT * FROM elections',
     function(err, rows) {
       if(!err && rows.length > 0) {
         var elections = [];
@@ -35,7 +35,7 @@ module.exports.dashboard = function(req, res) {
           elections.push(obj);
         });
 
-        res.render('user-dashboard.html', elections);
+        res.render('user-dashboard.html', {elections: elections});
       }
     }
   )

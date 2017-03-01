@@ -10,52 +10,27 @@
   <hr>
   
   <div class="row">
-    <div class="large-4 columns">
-      <div class="card">
-        <div class="card-header">
-          Em andamento 
-        </div>
-        <div class="card-content">
-         <p><b>Votação para:</b> Presidente da reitoria</p> 
-         <p><b>Iniciada em:</b> 99/99/9999</p> 
-         <p><b>Termina em:</b> 99/99/9999</p> 
-         <p><b>Total de candidatos:</b> 10</p> 
-         <p><b>Total de votos:</b> 22</p> 
-         <a href="election.html" class="primary button">Participar</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="large-4 columns">
-      <div class="card">
-        <div class="card-header">
-          Em andamento  
-        </div>
-        <div class="card-content">
-         <p><b>Votação para:</b> Chefe do departamento</p> 
-         <p><b>Iniciada em:</b> 99/99/9999</p> 
-         <p><b>Termina em:</b> 99/99/9999</p> 
-         <p><b>Total de candidatos:</b> 10</p> 
-         <p><b>Total de votos:</b> 22</p> 
-         <a href="#" class="primary button">Participar</a>
+    {% for election in elections %}
+      <div class="large-4 columns">
+        <div class="card">
+          <div class="card-header">
+            {{ election.statusId | translateStatus}}            
+          </div>
+          <div class="card-content">
+            <p><b>Votação para:</b>{{ election.title }} </p> 
+            <p><b>Iniciada em:</b> {{ election.initialDate | getDate}}</p> 
+            <p><b>Termina em:</b> {{ election.endDate | getDate }} </p> 
+            <p><b>Total de candidatos:</b> {{ election.Ncandidates }}</p> 
+            <p><b>Total de votos:</b> {{ election.Nvotes }}</p> 
+            {% if election.statusId == 0 %} 
+              <a href="/results/{{ election.url_friendly }}" class="success button white">Ver Resultado</a>
+            {% else %}
+              <a href="/election/{{ election.url_friendly }}" class="primary button">Participar</a>
+            {% endif %}
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="large-4 columns">
-      <div class="card">
-        <div class="card-header">
-          Em andamento  
-        </div>
-        <div class="card-content">
-         <p><b>Votação para:</b> Assessor de publicidade</p> 
-         <p><b>Iniciada em:</b> 99/99/9999</p> 
-         <p><b>Termina em:</b> 99/99/9999</p> 
-         <p><b>Total de candidatos:</b> 10</p> 
-         <p><b>Total de votos:</b> 22</p> 
-         <a href="#" class="primary button">Participar</a>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 {% endblock %}
