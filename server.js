@@ -28,7 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-
 app.get('/login', function (req, res) {
   res.render('login.html', {session: req.session});
 });
@@ -45,6 +44,7 @@ app.use(function(req, res, next) {
 app.get('/dashboard', user.dashboard);
 
 app.get('/election/:url_friendly', candidates.all);
+app.post('/vote/:candidateId/:electionId', election.vote);
 
 app.listen(3000, function () {
   console.log('server listening on port 3000!');
