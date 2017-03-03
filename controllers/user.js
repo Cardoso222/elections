@@ -14,7 +14,7 @@ module.exports.authenticate = function(req, res) {
         }
 
         req.session.error = true;
-        return res.redirect('/');
+        return res.redirect('/login');
       }
     );
   }
@@ -40,6 +40,7 @@ module.exports.dashboard = function(req, res) {
         });
 
         res.render('user-dashboard.html', {session: req.session, elections: elections});
+        req.session.unsetNotifications();
       }
     }
   )

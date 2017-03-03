@@ -36,6 +36,12 @@ app.post('/authenticate', user.authenticate);
 
 //check if user are authenticated
 app.use(function(req, res, next) {
+  req.session.unsetNotifications = function() {
+    this.error = false;
+    this.successVote = false;
+    this.errorVote = false;
+  };
+
   if (!req.session.email) return res.redirect("/login");
 
   next();

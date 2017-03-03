@@ -8,8 +8,11 @@
         <h1>Login</h1>
       </div>
       {% if session.error == true %}
-        <div class="error-msg">
-          <span> Matricula ou Senha incorretos </span>
+        <div class="alert callout small" data-closable>
+          <span><b> Erro!</b> Matricula ou Senha incorretos </span>
+          <button class="close-button" type="button" data-close>
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
       {% endif %}
       <form action="/authenticate" method="POST">
