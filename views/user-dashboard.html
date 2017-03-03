@@ -6,6 +6,29 @@
       <h1 class="title">Lista de Eventos</h1>
     </div>
   </div>
+  <div class="row">
+    {% if session.errorVote == true %}
+      <div class="large-12 columns">
+        <div class="alert callout small" data-closable>
+          <span> <b>Erro!</b> Seu Voto não foi registrado. Tente novamente</span>
+          <button class="close-button" type="button" data-close>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if session.successVote == true %}
+      <div class="large-12 columns">
+        <div class="success callout small" data-closable>
+          <span> <b>Sucesso!</b> Seu Voto foi registrado.</span>
+          <button class="close-button" type="button" data-close>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    {% endif %}
+  </div>
 
   <hr>
   

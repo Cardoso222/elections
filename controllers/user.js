@@ -21,6 +21,7 @@ module.exports.authenticate = function(req, res) {
 };
 
 module.exports.dashboard = function(req, res) {
+//TODO load Ncandidates
   db.connection.query('SELECT * FROM elections',
     function(err, rows) {
       if(!err && rows.length > 0) {
@@ -38,7 +39,7 @@ module.exports.dashboard = function(req, res) {
           elections.push(obj);
         });
 
-        res.render('user-dashboard.html', {elections: elections});
+        res.render('user-dashboard.html', {session: req.session, elections: elections});
       }
     }
   )

@@ -14,11 +14,11 @@ module.exports.vote = function(req, res) {
     }
   ], function (error, c) {
     if (error) {
-      req.session.error = true;
+      req.session.errorVote = true;
       return res.redirect('/dashboard');
     }
 
-    req.session.sucessVote = true;
+    req.session.successVote = true;
     return res.redirect('/dashboard');
   });
 };
