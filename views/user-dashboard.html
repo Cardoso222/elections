@@ -33,28 +33,40 @@
   <hr>
   
   <div class="row">
+
+    {{ votedElections | dump }}
     {% for election in elections %}
       <div class="large-4 columns">
         <div class="card">
+        <!--
           <div class="card-header">
             {{ election.statusId | translateStatus}}            
           </div>
+          !-->
           <div class="card-content">
-            <p><b>Votação para:</b>{{ election.title }} </p> 
+            <p><b>Votação para: </b>{{ election.title }} </p> 
             <p><b>Iniciada em:</b> {{ election.initialDate | getDate}}</p> 
             <p><b>Termina em:</b> {{ election.endDate | getDate }} </p> 
             <p><b>Total de candidatos:</b> {{ election.Ncandidates }}</p> 
             <p><b>Total de votos:</b> {{ election.Nvotes }}</p> 
+              
+            {% if election.userVoted == true %} 
+              <a class="secondary button" href="#">Você já Participou </a>
+
+            {% elif election.statusId == 1 and election.userVoted == false %}
+              <a href="/election/{{ election.url_friendly }}" class="primary button">Participar</a>
+            {% endif %}
+
             {% if election.statusId == 0 %} 
               <a href="/results/{{ election.url_friendly }}" class="success button white">Ver Resultado</a>
-            {% else %}
-              <a href="/election/{{ election.url_friendly }}" class="primary button">Participar</a>
             {% endif %}
           </div>
         </div>
       </div>
+
       {% endfor %}
     </div>
   </div>
 {% endblock %}
+
 

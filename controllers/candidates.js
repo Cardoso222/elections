@@ -17,8 +17,10 @@ module.exports.all = function(req, res) {
 
           candidates.push(obj);
         });
+        if (req.session.votedElections.includes(candidates[0].electionId))
+          return res.redirect("/dashboard");
 
-        res.render('election.html', {candidates: candidates});
+        return res.render('election.html', {candidates: candidates});
       }
     }
   )

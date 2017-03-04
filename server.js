@@ -47,7 +47,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/dashboard', user.dashboard);
+app.get('/dashboard', election.dashboard);
 
 app.get('/election/:url_friendly', candidates.all);
 app.post('/vote/:candidateId/:electionId', election.vote);

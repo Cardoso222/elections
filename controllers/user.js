@@ -5,6 +5,7 @@ module.exports.authenticate = function(req, res) {
     db.connection.query('SELECT * FROM users WHERE email = ? and password = ?', [req.body.email, req.body.password],
       function(err, rows) {
         if (!err && rows.length > 0) {
+          req.session.userId = rows[0].id;
           req.session.email = rows[0].email;
           req.session.type = rows[0].type;
           req.session.error = false;
@@ -20,28 +21,10 @@ module.exports.authenticate = function(req, res) {
   }
 };
 
-module.exports.dashboard = function(req, res) {
+function getParticipations () {
 //TODO load Ncandidates
-  db.connection.query('SELECT * FROM elections',
-    function(err, rows) {
-      if(!err && rows.length > 0) {
-        var elections = [];
-        rows.forEach(function(election, index) {
-          var obj = {};
-          obj.title = election.title;
-          obj.statusId = election.statusId;
-          obj.initialDate = election.initialDate;
-          obj.endDate = election.endDate;
-          obj.Ncandidates = election.Ncandidates;
-          obj.Nvotes = election.Nvotes;
-          obj.url_friendly = election.url_friendly;
+};
 
-          elections.push(obj);
-        });
-
-        res.render('user-dashboard.html', {session: req.session, elections: elections});
-        req.session.unsetNotifications();
-      }
-    }
-  )
+function getAllCandidates () {
+//TODO load all election who user participate
 };

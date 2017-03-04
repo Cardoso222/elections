@@ -3,6 +3,11 @@
   border: 1px solid #ecf0f1;
   padding: 30px;
   margin-top: 18%;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.login-box .button {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .login-header {
