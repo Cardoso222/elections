@@ -23,7 +23,7 @@ module.exports.dashboard = function(req, res) {
 
 module.exports.newCandidate = function(req, res) {
   if (req.session.type == 1) { 
-    return res.render("new-candidate.html", {url_friendly: req.params.url_friendly});
+    return res.render("new-candidate.html", {electionId: req.params.electionId});
   }
 
   return res.redirect("/login");

@@ -52,7 +52,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/admin', admin.dashboard);
-app.get('/novo_candidato/:url_friendly', admin.newCandidate);
+app.get('/novo_candidato/:electionId', admin.newCandidate);
 app.post('/candidate/new', upload.single('pic_name'), candidates.new);
 
 app.get('/dashboard', election.dashboard);

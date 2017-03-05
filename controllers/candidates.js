@@ -28,7 +28,23 @@ module.exports.all = function(req, res) {
 };
 
 module.exports.new = function(req, res) {
-  console.log(req.file);
-  
-  return res.redirect('/admin');
+  var name = req.body.name;
+  var age = req.body.age;
+  var political_party = req.body.political_party;
+  var electionId = req.body.electionId;
+  var pic_name = req.file.filename;
+  console.log(pic_name);
+  console.log(req.body);
+  db.connection.query('INSERT INTO candidates (name, age, political_party, pic_name, electionId) VALUES (?, ?, ?, ?, ?)', [name, age, political_party, pic_name, electionId],
+    function(err) {
+      if (err) {
+        console.log(err);
+        req.session.error = true;
+        return res.redirect('/admin');
+      }
+
+      req.session.error = false;
+      return res.redirect('/admin');
+    }
+  )
 };
