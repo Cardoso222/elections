@@ -146,3 +146,5 @@ function setUserVotes (req, res, callback) {
       } 
     )
 };
+
+exports.getAllElections = getAllElections;

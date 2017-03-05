@@ -3,10 +3,14 @@ var expressSession = require('express-session');
 var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
 var path = require('path');
+var multer = require('multer');
+
+var upload = multer({ dest: './public/img/candidates/' });
 
 var user = require('./controllers/user');
 var election = require('./controllers/elections');
 var candidates = require('./controllers/candidates');
+var admin = require('./controllers/admin');
 var app = express();
 
 app.use(expressSession({
@@ -46,6 +50,10 @@ app.use(function(req, res, next) {
 
   next();
 });
+
+app.get('/admin', admin.dashboard);
+app.get('/novo_candidato/:url_friendly', admin.newCandidate);
+app.post('/candidate/new', upload.single('pic_name'), candidates.new);
 
 app.get('/dashboard', election.dashboard);
 

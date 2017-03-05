@@ -15,6 +15,10 @@
   margin-top: 10px;
 }
 
+.margin-top-20 {
+  margin-top: 20px;
+}
+
 .error-msg {
   background-color: #f04124;
   color: #FFFFFF;

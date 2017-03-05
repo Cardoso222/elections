@@ -1,4 +1,5 @@
 var db = require('../config/connection');
+var multer = require('multer');
 
 module.exports.all = function(req, res) {
   db.connection.query('select * from elections, candidates where url_friendly = ?' + 
@@ -24,4 +25,10 @@ module.exports.all = function(req, res) {
       }
     }
   )
+};
+
+module.exports.new = function(req, res) {
+  console.log(req.file);
+  
+  return res.redirect('/admin');
 };

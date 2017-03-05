@@ -33,16 +33,9 @@
   <hr>
   
   <div class="row">
-
-    {{ votedElections | dump }}
     {% for election in elections %}
       <div class="large-4 columns">
         <div class="card">
-        <!--
-          <div class="card-header">
-            {{ election.statusId | translateStatus}}            
-          </div>
-          !-->
           <div class="card-content">
             <p><b>Votação para: </b>{{ election.title }} </p> 
             <p><b>Iniciada em:</b> {{ election.initialDate | getDate}}</p> 
@@ -63,7 +56,6 @@
           </div>
         </div>
       </div>
-
       {% endfor %}
     </div>
   </div>
