@@ -2,16 +2,16 @@
 
 {% block content %}
   <div class="row">
-    <div class="large-4 large-centered columns">
+    <div class="large-5 large-centered columns">
       <div class="box">
         <div class="box-header">
-          Novo Candidato
+          <h1>Novo Candidato</h1>
         </div>
       <form action="/candidate/new" method="POST" enctype="multipart/form-data"> 
         Nome: <input type="text" name="name" required>
         Idade: <input type="text" name="age" required>
         Partido: <input type="text" name="political_party" required>
-        Foto: <input type="file" name="pic_name" accept="image/*">  
+        Foto: <input type="file" name="pic_name" accept="image/*">
         <input type="hidden" name="electionId" value="{{ electionId }}">
 
         <input class="primary button" type="submit" value="Salvar">

@@ -32,9 +32,9 @@ module.exports.dashboard = function (req, res) {
     function(callback) {
       getAllElections(req, res, callback);
     },
-    function (elections, callback) { 
+    function (elections, callback) {
       response.elections = elections;
-      getUserVotes(req, res, callback); 
+      getUserVotes(req, res, callback);
     },
     function (votedElections, callback) {
       req.session.votedElections = votedElections;
@@ -43,13 +43,35 @@ module.exports.dashboard = function (req, res) {
   ], function(error, elections) {
     if (error) {
       req.session.error = true;
-      return res.send("error"); 
+      return res.send("error");
     }
 
     response.elections = elections;
     res.render('user-dashboard.html', response);
     req.session.unsetNotifications();
   });
+};
+
+module.exports.new = function(req, res) {
+  return res.render('new-election.html');
+};
+
+module.exports.create = function(req, res) {
+  var title = req.body.title;
+  var initialDate = req.body.initialDate;
+  var endDate = req.body.endDate;
+
+  db.connection.query('INSERT INTO elections (statusId, title, initialDate, endDate) VALUES (?, ?, ?, ?)', [1, title, initialDate, endDate],
+    function(err, result) {
+      if (err) {
+        req.session.error = true;
+        console.log(err);
+      }
+
+      req.session.error = false;
+      return res.redirect('/admin');
+    }
+  )
 };
 
 function setVotedElections(votedElections, elections, callback) {
@@ -89,7 +111,7 @@ function getUserVotes(req, res, callback) {
     function(err, rows) {
       if (!err) {
         var votedElections = [];
-        rows.forEach((row) => 
+        rows.forEach((row) =>
           votedElections.push(row.electionId)
         )
         return callback(null, votedElections);
@@ -102,9 +124,9 @@ function getUserVotes(req, res, callback) {
 function newVote(req, res, callback) {
   var candidateId = req.params.candidateId;
   var electionId = req.params.electionId;
-  db.connection.query('INSERT INTO votes (electionId, candidateId) VALUES (?, ?)', [electionId, candidateId], 
+  db.connection.query('INSERT INTO votes (electionId, candidateId) VALUES (?, ?)', [electionId, candidateId],
     function(err, result) {
-      if (!err) return callback(null); 
+      if (!err) return callback(null);
 
       return callback(true);
     }
