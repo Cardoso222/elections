@@ -9,16 +9,12 @@ module.exports.vote = function(req, res) {
     function(callback) {
       getElectionVote(req, res, callback);
     },
-    function(Nvotes, callback) {
-      updateElectionVote(req, res, Nvotes, callback);
-    },
     function(callback) {
       setUserVotes(req, res, callback);
     }
   ], function (error, c) {
     if (error) {
       req.session.errorVote = true;
-      return res.redirect('/dashboard');
     }
 
     req.session.successVote = true;
@@ -46,6 +42,7 @@ module.exports.dashboard = function (req, res) {
       return res.send("error");
     }
 
+    response.session = req.session;
     response.elections = elections;
     res.render('user-dashboard.html', response);
     req.session.unsetNotifications();
@@ -60,12 +57,12 @@ module.exports.create = function(req, res) {
   var title = req.body.title;
   var initialDate = req.body.initialDate;
   var endDate = req.body.endDate;
+  var url_friendly = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 
-  db.connection.query('INSERT INTO elections (statusId, title, initialDate, endDate) VALUES (?, ?, ?, ?)', [1, title, initialDate, endDate],
+  db.connection.query('INSERT INTO elections (statusId, title, initialDate, endDate, url_friendly) VALUES (?, ?, ?, ?, ?)', [1, title, initialDate, endDate, url_friendly],
     function(err, result) {
       if (err) {
         req.session.error = true;
-        console.log(err);
       }
 
       req.session.error = false;
@@ -84,7 +81,7 @@ function setVotedElections(votedElections, elections, callback) {
 function getAllElections(req, res, callback) {
   db.connection.query('SELECT * FROM elections',
     function(err, rows) {
-      if(!err && rows.length > 0) {
+      if(!err) {
         var elections = [];
         rows.forEach(function(election, index) {
           var obj = {};
@@ -93,8 +90,6 @@ function getAllElections(req, res, callback) {
           obj.statusId = election.statusId;
           obj.initialDate = election.initialDate;
           obj.endDate = election.endDate;
-          obj.Ncandidates = election.Ncandidates;
-          obj.Nvotes = election.Nvotes;
           obj.url_friendly = election.url_friendly;
 
           elections.push(obj);
@@ -126,6 +121,7 @@ function newVote(req, res, callback) {
   var electionId = req.params.electionId;
   db.connection.query('INSERT INTO votes (electionId, candidateId) VALUES (?, ?)', [electionId, candidateId],
     function(err, result) {
+      console.log(err);
       if (!err) return callback(null);
 
       return callback(true);
@@ -134,39 +130,29 @@ function newVote(req, res, callback) {
 }
 
 function getElectionVote(req, res, callback) {
-  var electionId = req.params.electionId; 
-  db.connection.query('SELECT count(*) as Nvotes FROM votes WHERE electionId = ?', [electionId], 
+  var electionId = req.params.electionId;
+  db.connection.query('SELECT count(*) as Nvotes FROM votes WHERE electionId = ?', [electionId],
     function(err, result) {
+      console.log(err);
       var Nvotes = result[0].Nvotes;
-      if (!err) return callback(null, Nvotes); 
+      if (!err) return callback(null, Nvotes);
 
       return callback(true);
     }
   )
 }
 
-function updateElectionVote(req, res, Nvotes, callback) {
-  var electionId = req.params.electionId; 
-  db.connection.query('UPDATE elections SET Nvotes = ? WHERE id = ?', [Nvotes, electionId],
+function setUserVotes (req, res, callback) {
+  var userId = req.session.userId;
+  var electionId = req.params.electionId;
+
+  db.connection.query('INSERT INTO usersHistory (userId, electionId) VALUES (?, ?)', [userId, electionId],
     function(err, result) {
       if (!err) return callback(null);
 
       return callback(true);
-    } 
+    }
   )
-}
-
-function setUserVotes (req, res, callback) {
-  var userId = req.session.userId; 
-  var electionId = req.params.electionId; 
-
-  db.connection.query('INSERT INTO usersHistory (userId, electionId) VALUES (?, ?)', [userId, electionId],
-      function(err, result) {
-        if (!err) return callback(null);
-
-        return callback(true);
-      } 
-    )
 };
 
 exports.getAllElections = getAllElections;
