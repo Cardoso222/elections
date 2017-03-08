@@ -17,12 +17,13 @@ module.exports.dashboard = function(req, res) {
       if (error) return res.redirect('/login');
 
       return res.render("admin-dashboard.html", response);
+      req.session.unsetNotifications();
     }
   )
 };
 
 module.exports.newCandidate = function(req, res) {
-  if (req.session.type == 1) { 
+  if (req.session.type == 1) {
     return res.render("new-candidate.html", {electionId: req.params.electionId});
   }
 

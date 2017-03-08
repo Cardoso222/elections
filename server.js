@@ -36,7 +36,7 @@ app.get('/login', function (req, res) {
   res.render('login.html', {session: req.session});
 });
 
-app.post('/authenticate', user.authenticate); 
+app.post('/authenticate', user.authenticate);
 
 //check if user are authenticated
 app.use(function(req, res, next) {
@@ -57,6 +57,7 @@ app.get('/novo_candidato/:electionId', admin.newCandidate);
 app.post('/candidate/new', upload.single('pic_name'), candidates.new);
 app.get('/nova_eleicao', election.new);
 app.post('/elections/new', election.create);
+app.get('/elections/:url_friendly/end', election.end);
 
 
 app.get('/dashboard', election.dashboard);

@@ -2,8 +2,8 @@ var db = require('../config/connection');
 var multer = require('multer');
 
 module.exports.all = function(req, res) {
-  db.connection.query('select * from elections, candidates where url_friendly = ?' + 
-     'and candidates.electionId = elections.id', [req.params.url_friendly],
+  db.connection.query('SELECT * FROM elections, candidates WHERE url_friendly = ?' + 
+     'AND candidates.electionId = elections.id', [req.params.url_friendly],
     function(err, rows) {
       if(!err && rows.length > 0) {
         var candidates = [];

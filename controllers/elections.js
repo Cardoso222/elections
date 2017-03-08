@@ -71,6 +71,17 @@ module.exports.create = function(req, res) {
   )
 };
 
+module.exports.end = function(req, res) {
+  db.connection.query('UPDATE elections SET statusId = 0 WHERE url_friendly = ?', [req.params.url_friendly],
+    function(err) {
+      if (err) req.session.error = true;
+
+      req.session.error = false;
+      res.redirect('/admin');
+    }
+  )
+};
+
 function setVotedElections(votedElections, elections, callback) {
   elections.forEach(function(election) {
     votedElections.includes(election.id) ? election.userVoted = true : election.userVoted = false;
