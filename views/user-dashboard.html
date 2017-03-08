@@ -31,32 +31,35 @@
   </div>
 
   <hr>
-  
+
   <div class="row">
-    {% for election in elections %}
-      <div class="large-4 columns">
-        <div class="card">
-          <div class="card-content">
-            <p><b>Votação para: </b>{{ election.title }} </p> 
-            <p><b>Iniciada em:</b> {{ election.initialDate | getDate}}</p> 
-            <p><b>Termina em:</b> {{ election.endDate | getDate }} </p> 
-            <p><b>Total de candidatos:</b> {{ election.Ncandidates }}</p> 
-            <p><b>Total de votos:</b> {{ election.Nvotes }}</p> 
-              
-            {% if election.userVoted == true %} 
-              <a class="secondary button" href="#">Você já Participou </a>
+    {% if elections.length > 0 %}
+      {% for election in elections %}
+        <div class="large-4 columns">
+          <div class="card">
+            <div class="card-content">
+              <p><b>Votação para: </b>{{ election.title }} </p>
+              <p><b>Iniciada em:</b> {{ election.initialDate }}</p>
+              <p><b>Termina em:</b> {{ election.endDate }} </p>
+              <p><b>Total de candidatos:</b> {{ election.Ncandidates }}</p>
+              <p><b>Total de votos:</b> {{ election.Nvotes }}</p>
+              {% if election.userVoted == true %}
+                <a class="secondary button" href="#">Você já Participou </a>
 
-            {% elif election.statusId == 1 and election.userVoted == false %}
-              <a href="/election/{{ election.url_friendly }}" class="primary button">Participar</a>
-            {% endif %}
+              {% elif election.statusId == 1 and election.userVoted == false %}
+                <a href="/election/{{ election.url_friendly }}" class="primary button">Participar</a>
+              {% endif %}
 
-            {% if election.statusId == 0 %} 
-              <a href="/results/{{ election.url_friendly }}" class="success button white">Ver Resultado</a>
-            {% endif %}
+              {% if election.statusId == 0 %}
+                <a href="/results/{{ election.url_friendly }}" class="success button white">Ver Resultado</a>
+              {% endif %}
+            </div>
           </div>
         </div>
-      </div>
       {% endfor %}
+    {% else %}
+    <h2> Não existem eleições disponiveis </h2>
+    {% endif %}
     </div>
   </div>
 {% endblock %}

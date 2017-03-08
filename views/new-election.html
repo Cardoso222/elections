@@ -1,0 +1,45 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<link rel="styleheets" href=">https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.4.3/flatpickr.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<div class="row">
+    <div class="large-5 large-centered columns">
+      <div class="box">
+        <div class="box-header">
+          <h1>Nova Eleição</h1>
+        </div>
+      <form action="/elections/new" method="POST">
+        Titulo: <input type="text" name="title" required>
+        Data de Inicio: <input type="text" name="initialDate" id="initialDate" placeholder="Selecione uma data..">
+        Data de Termino: <input type="text" name="endDate" id="endDate" placeholder="Selecione uma data..">
+
+        <input class="primary button" type="submit" value="Salvar">
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript">
+    var datepickerTranslate = {
+      dateFormat: 'dd/mm/yy',
+      dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+      dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+      dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+      monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+      monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+      nextText: 'Próximo',
+      prevText: 'Anterior'
+    };
+
+    $("#initialDate").datepicker(datepickerTranslate);
+    $("#endDate").datepicker(datepickerTranslate);
+  </script>
+{% endblock %}

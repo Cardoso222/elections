@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
+CREATE DATABASE  IF NOT EXISTS `mydb` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `mydb`;
+-- MySQL dump 10.13  Distrib 5.5.54, for debian-linux-gnu (x86_64)
 --
 -- Host: 127.0.0.1    Database: mydb
 -- ------------------------------------------------------
--- Server version	5.7.17-0ubuntu0.16.04.1
+-- Server version	5.5.54-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -58,13 +60,11 @@ CREATE TABLE `elections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) DEFAULT NULL,
   `statusId` int(11) DEFAULT NULL,
-  `initialDate` datetime DEFAULT NULL,
-  `endDate` datetime DEFAULT NULL,
-  `Ncandidates` int(11) DEFAULT NULL,
-  `Nvotes` int(11) DEFAULT NULL,
+  `initialDate` varchar(45) DEFAULT NULL,
+  `endDate` varchar(45) DEFAULT NULL,
   `url_friendly` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,4 +131,4 @@ CREATE TABLE `votes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-04  0:40:01
+-- Dump completed on 2017-03-07  9:27:50

@@ -51,12 +51,15 @@ app.use(function(req, res, next) {
   next();
 });
 
+//admin
 app.get('/admin', admin.dashboard);
 app.get('/novo_candidato/:electionId', admin.newCandidate);
 app.post('/candidate/new', upload.single('pic_name'), candidates.new);
+app.get('/nova_eleicao', election.new);
+app.post('/elections/new', election.create);
+
 
 app.get('/dashboard', election.dashboard);
-
 app.get('/election/:url_friendly', candidates.all);
 app.post('/vote/:candidateId/:electionId', election.vote);
 
