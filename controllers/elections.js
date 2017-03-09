@@ -35,6 +35,10 @@ module.exports.dashboard = function (req, res) {
     },
     function (votes, callback) {
       response.votes = votes;
+      getElectionsCandidates(req, res, callback);
+    },
+    function (candidates, callback) {
+      response.candidates = candidates;
       setVotedElections(req.session.votedElections, response.elections, callback);
     }
   ], function(error, elections) {
@@ -43,7 +47,10 @@ module.exports.dashboard = function (req, res) {
       return res.send("error");
     }
 
-    elections.map((elem, index) => elem.votes = response.votes[index]);
+    elections.map(function(elem, index) {
+      elem.votes = response.votes[index];
+      elem.candidates = response.candidates[index];
+    });
 
     response.session = req.session;
     response.elections = elections;
@@ -104,6 +111,23 @@ function getAllElections(req, res, callback) {
   )
 };
 
+function getElectionsCandidates(req, res, callback) {
+  db.connection.query('SELECT count(*) as total, electionId FROM candidates GROUP BY electionId',
+    function(err, rows) {
+      if(!err) {
+        var candidates = [];
+        rows.forEach(function(candidate, index) {
+
+          candidates.push(candidate.total);
+        });
+        return callback(null, candidates);
+      }
+      return callback(true);
+    }
+  )
+
+};
+
 function getElectionsVotes(req, res, callback) {
   db.connection.query('SELECT count(*) as votes, electionId FROM votes GROUP BY electionId',
     function(err, rows) {
@@ -152,7 +176,7 @@ function setUserVotes (req, res, callback) {
   var userId = req.session.userId;
   var electionId = req.params.electionId;
 
-  db.connection.query('INSERT INTO usersHistory (userId, electionId) VALUES (?, ?)', [userId, electionId],
+  db.connection.query('INSERT INTO usersHistory (userId, electionId, createAt) VALUES (?, ?, NOW())', [userId, electionId],
     function(err, result) {
       if (!err) return callback(null);
 
