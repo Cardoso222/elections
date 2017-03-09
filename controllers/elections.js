@@ -7,9 +7,6 @@ module.exports.vote = function(req, res) {
       newVote(req, res, callback);
     },
     function(callback) {
-      getElectionVote(req, res, callback);
-    },
-    function(callback) {
       setUserVotes(req, res, callback);
     }
   ], function (error, c) {
@@ -34,13 +31,19 @@ module.exports.dashboard = function (req, res) {
     },
     function (votedElections, callback) {
       req.session.votedElections = votedElections;
-      setVotedElections(votedElections, response.elections, callback);
+      getElectionsVotes (req, res, callback);
+    },
+    function (votes, callback) {
+      response.votes = votes;
+      setVotedElections(req.session.votedElections, response.elections, callback);
     }
   ], function(error, elections) {
     if (error) {
       req.session.error = true;
       return res.send("error");
     }
+
+    elections.map((elem, index) => elem.votes = response.votes[index]);
 
     response.session = req.session;
     response.elections = elections;
@@ -101,6 +104,22 @@ function getAllElections(req, res, callback) {
   )
 };
 
+function getElectionsVotes(req, res, callback) {
+  db.connection.query('SELECT count(*) as votes, electionId FROM votes GROUP BY electionId',
+    function(err, rows) {
+      if(!err) {
+        var votes = [];
+        rows.forEach(function(vote, index) {
+
+          votes.push(vote.votes);
+        });
+        return callback(null, votes);
+      }
+      return callback(true);
+    }
+  )
+};
+
 function getUserVotes(req, res, callback) {
   db.connection.query('SELECT electionId FROM usersHistory WHERE userId = ?', [req.session.userId],
     function(err, rows) {
@@ -123,19 +142,6 @@ function newVote(req, res, callback) {
     function(err, result) {
       console.log(err);
       if (!err) return callback(null);
-
-      return callback(true);
-    }
-  )
-}
-
-function getElectionVote(req, res, callback) {
-  var electionId = req.params.electionId;
-  db.connection.query('SELECT count(*) as Nvotes FROM votes WHERE electionId = ?', [electionId],
-    function(err, result) {
-      console.log(err);
-      var Nvotes = result[0].Nvotes;
-      if (!err) return callback(null, Nvotes);
 
       return callback(true);
     }

@@ -4,6 +4,7 @@ var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
 var path = require('path');
 var multer = require('multer');
+var io = require('socket.io');
 
 var upload = multer({ dest: './public/img/candidates/' });
 
@@ -11,7 +12,8 @@ var user = require('./controllers/user');
 var election = require('./controllers/elections');
 var candidates = require('./controllers/candidates');
 var admin = require('./controllers/admin');
-var app = express();
+
+var app = require('express')();
 
 app.use(expressSession({
     secret: 'littlecup',
@@ -36,7 +38,7 @@ app.get('/login', function (req, res) {
   res.render('login.html', {session: req.session});
 });
 
-app.post('/authenticate', user.authenticate); 
+app.post('/authenticate', user.authenticate);
 
 //check if user are authenticated
 app.use(function(req, res, next) {
