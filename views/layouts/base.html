@@ -21,6 +21,11 @@
   <div class="top-bar-left">
     <span class="menu-text"> Eleições UFBA </span>
   </div>
+  {% if session.email %}
+    <div class="top-bar-right">
+        <a href="/logout"><span class="white">Sair</span></a>
+    </div>
+  {% endif %}
 </div>
 
 {% endblock %}

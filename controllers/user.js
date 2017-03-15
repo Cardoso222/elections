@@ -23,6 +23,11 @@ module.exports.authenticate = function(req, res) {
   }
 };
 
+module.exports.logout = function(req, res) {
+  req.session.destroy();
+  return res.redirect('/login');
+};
+
 function saltHashPassword(userpassword) {
   var salt = 'salt';
   var passwordData = sha512(userpassword, salt);

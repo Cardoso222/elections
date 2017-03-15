@@ -39,6 +39,7 @@ app.get('/login', function (req, res) {
 });
 
 app.post('/authenticate', user.authenticate);
+app.get('/logout', user.logout);
 
 //check if user are authenticated
 app.use(function(req, res, next) {
