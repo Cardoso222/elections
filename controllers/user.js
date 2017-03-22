@@ -15,7 +15,7 @@ module.exports.authenticate = function(req, res) {
           if (req.session.type == 1) return res.redirect ('/admin');
           if (req.session.type == 2) return res.redirect('/dashboard');
         }
-
+        console.log(err);
         req.session.error = true;
         return res.redirect('/login');
       }

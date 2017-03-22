@@ -125,7 +125,6 @@ function getElectionsCandidates(req, res, callback) {
       return callback(true);
     }
   )
-
 };
 
 function getElectionsVotes(req, res, callback) {
@@ -185,4 +184,21 @@ function setUserVotes (req, res, callback) {
   )
 };
 
+function getVotedElections(req, res, callback) {
+  db.connection.query('SELECT count(*) as votes, electionId FROM votes GROUP BY electionId',
+    function(err, rows) {
+      if(!err) {
+        var voted = [];
+        rows.forEach(function(vote, index) {
+
+          voted.push(vote.electionId);
+        });
+        return callback(null, voted);
+      }
+      return callback(true);
+    }
+  )
+};
+
+exports.getVotedElections = getVotedElections;
 exports.getAllElections = getAllElections;
