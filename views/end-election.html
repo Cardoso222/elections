@@ -1,6 +1,47 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-  {{ candidates | dump}}
-  {{ votes | dump}}
+  <div class="row">
+    <div class="large-6 columns">
+      <h1 class="title">Finalizar Eleição</h1>
+    </div>
+  </div>
+
+  <hr>
+
+<div class="row">
+  <div class="large-6 columns">
+    <h3>Ranking</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="large-8 columns">
+    <div class="ranking">
+      {% for candidate in candidates %}
+        <div class="row">
+          <div class="large-6 columns">
+            <div class="card">
+              <div class="row">
+                <div class="large-6 columns">
+                  <img src="/img/candidates/{{ candidate.pic_name }}">
+                </div>
+
+                <div class="large-6 columns margin-top-10">
+                  <form>
+                    <p><b>Nome:</b> {{ candidate.name }}</p>
+                    <p><b>Idade:</b> {{ candidate.age }}</p>
+                    <p><b>Partido:</b> {{ candidate.political_party }}</p>
+                    <p><b>Votos: </b> {{ candidate.votes }} </p>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    <div>
+  <div>
+</div>
 {% endblock %}
+

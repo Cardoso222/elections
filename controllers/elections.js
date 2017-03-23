@@ -47,10 +47,14 @@ module.exports.dashboard = function (req, res) {
       return res.send("error");
     }
 
-    elections.map(function(elem, index) {
-      elem.votes = response.votes[index];
-      elem.candidates = response.candidates[index];
-    });
+    for (var i = 0; i < response.elections.length; i++) {
+      for (var j = 0; j  < response.votes.length; j++) {
+        if (response.elections[i].id == response.votes[j].electionId) {
+          response.elections[i].votes = response.votes[j].votes;
+        }
+      }
+      response.elections[i].candidates = response.candidates[i];
+    }
 
     response.session = req.session;
     response.elections = elections;
@@ -134,7 +138,7 @@ function getElectionsVotes(req, res, callback) {
         var votes = [];
         rows.forEach(function(vote, index) {
 
-          votes.push(vote.votes);
+          votes.push({votes: vote.votes, electionId: vote.electionId});
         });
         return callback(null, votes);
       }
@@ -163,7 +167,6 @@ function newVote(req, res, callback) {
   var electionId = req.params.electionId;
   db.connection.query('INSERT INTO votes (electionId, candidateId) VALUES (?, ?)', [electionId, candidateId],
     function(err, result) {
-      console.log(err);
       if (!err) return callback(null);
 
       return callback(true);

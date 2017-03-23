@@ -50,6 +50,11 @@ module.exports.new = function(req, res) {
 module.exports.votes = function(req, res) {
   getCandidatesVotes(req, res).then(function(candidates) {
     getCandidatesInfo(candidates).then(function(candidatesInfo) {
+      candidates.forEach(function(candidate, index) {
+        if (candidate.candidateId == candidatesInfo[index].id) {
+          candidatesInfo[index].votes = candidate.totalVotos;
+         }
+      })
       return res.render('end-election.html', {candidates: candidatesInfo, votes: candidates})
     })
   });

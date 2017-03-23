@@ -41,7 +41,7 @@
               <p><b>Iniciada em:</b> {{ election.initialDate }}</p>
               <p><b>Termina em:</b> {{ election.endDate }} </p>
               <p><b>Total de candidatos:</b> <span> {{ election.candidates }} </span> </p>
-              <p><b>Total de votos:</b> <span>{{ election.votes }}</span> </p>
+              <p><b>Total de votos:</b> <span>{{ election.votes if election.votes else '0' }}</span> </p>
               {% if election.userVoted == true %}
                 <a class="secondary button" href="#">Você já Participou </a>
 
