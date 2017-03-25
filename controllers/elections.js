@@ -85,6 +85,44 @@ module.exports.create = function(req, res) {
   )
 };
 
+module.exports.end = function(req, res) {
+  var electionId = req.params.electionId;
+  var candidates = JSON.parse(req.body.candidates);
+  var winner = '';
+  var mostVoted = 0;
+
+  candidates.map(function(elem) {
+    if (elem.votes > mostVoted) {
+      mostVoted = elem.votes;
+      winner = elem.id;
+    }
+  });
+
+  db.connection.query('UPDATE elections SET winner = ?, statusId = 0 WHERE id = ? ', [winner, electionId],
+    function(err, result) {
+      if (err) {
+        req.session.error = true;
+      }
+
+      req.session.error = false;
+      return res.redirect('/admin');
+    }
+  )
+};
+
+module.exports.result = function(req, res) {
+  var urlFriendly = req.params.url_friendly;
+  db.connection.query('SELECT * FROM elections, candidates WHERE url_friendly = ? and candidates.id = elections.winner', [urlFriendly],
+    function(err, rows) {
+      if(!err) {
+        var winnerInfo = rows[0];
+        return res.render('results.html', {session: req.session, candidate: winnerInfo});
+      }
+      console.log(err);
+    }
+  )
+};
+
 function setVotedElections(votedElections, elections, callback) {
   elections.forEach(function(election) {
     votedElections.includes(election.id) ? election.userVoted = true : election.userVoted = false;

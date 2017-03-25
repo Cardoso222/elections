@@ -1,0 +1,41 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="large-6 columns">
+      <h1 class="title">Vencedor</h1>
+    </div>
+  </div>
+  <hr>
+{{ session | dump }}
+  <div class="row">
+    <h2>O Novo(a): {{ candidate.title }}</h2>
+    <div class="large-4 columns large-centered">
+      <div class="card">
+        <div class="row">
+          <div class="large-6 columns">
+            <img src="/img/candidates/{{ candidate.pic_name }}">
+          </div>
+          <div class="large-6 columns margin-top-10">
+            <form action="/vote/{{ candidate.id }}/{{ candidate.electionId }}" method="POST">
+              <p><b>Nome:</b> {{ candidate.name }}</p>
+              <p><b>Idade:</b> {{ candidate.age }}</p>
+              <p><b>Partido:</b> {{ candidate.political_party }}</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="large-centered large-3 columns">
+      {% if session.type == 1 %}
+        <a href="/admin" class="full-width button">Voltar</a>
+
+      {% else %}
+
+        <a href="/dashboard" class="full-width button">Voltar</a>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

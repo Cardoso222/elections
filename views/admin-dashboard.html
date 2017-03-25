@@ -17,8 +17,15 @@
           <p><b>Iniciada em:</b> {{ election.initialDate }}</p>
           <p><b>Termina em:</b> {{ election.endDate  }} </p>
 
-          <a href="/novo_candidato/{{ election.id }}" class="primary button">Adicionar Candidato</a>
-          {% if election.voted == true %}
+          {% if election.statusId != 0 %}
+            <a href="/novo_candidato/{{ election.id }}" class="primary button">Adicionar Candidato</a>
+          {% endif %}
+
+          {% if election.statusId == 0 %}
+            <a href="/results/{{ election.url_friendly }}" class="success button white">Ver Resultado</a>
+          {% endif %}
+
+          {% if election.voted == true and election.statusId != 0 %}
             <a href="/finalizar_eleicao/{{ election.id }}" class="alert button">Finalizar Eleição</a>
           {% endif %}
         </div>

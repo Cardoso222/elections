@@ -25,7 +25,6 @@
                 <div class="large-6 columns">
                   <img src="/img/candidates/{{ candidate.pic_name }}">
                 </div>
-
                 <div class="large-6 columns margin-top-10">
                   <form>
                     <p><b>Nome:</b> {{ candidate.name }}</p>
@@ -34,12 +33,18 @@
                     <p><b>Votos: </b> {{ candidate.votes }} </p>
                   </form>
                 </div>
-
               </div>
             </div>
           </div>
         </div>
       {% endfor %}
+      <div class="row margin-top-20">
+        <div class="large-12 columns">
+          <form action="/election/end/{{ candidates[0].electionId }}" method="POST">
+            <input type="hidden" name="candidates" value="{{ candidates | dump }}">
+            <input type="submit" class="button" value="Finalizar">
+        </div>
+      </div>
     <div>
   <div>
 </div>

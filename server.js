@@ -68,6 +68,9 @@ app.post('/vote/:candidateId/:electionId', election.vote);
 
 app.get('/finalizar_eleicao/:electionId', candidates.votes);
 
+app.get('/results/:url_friendly', election.result);
+app.post('/election/end/:electionId', election.end);
+
 app.listen(3000, function () {
   console.log('server listening on port 3000!');
 });
