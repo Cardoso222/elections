@@ -54,6 +54,20 @@ app.use(function(req, res, next) {
   next();
 });
 
+//user
+app.get('/dashboard', election.dashboard);
+app.get('/election/:url_friendly', candidates.all);
+app.post('/vote/:candidateId/:electionId', election.vote);
+app.get('/finalizar_eleicao/:electionId', candidates.votes);
+app.get('/results/:url_friendly', election.result);
+app.post('/election/end/:electionId', election.end);
+
+app.use(function(req, res, next) {
+  if (req.session.type != 1) return res.redirect("/login");
+
+  next();
+});
+
 //admin
 app.get('/admin', admin.dashboard);
 app.get('/novo_candidato/:electionId', admin.newCandidate);
@@ -62,14 +76,6 @@ app.get('/nova_eleicao', election.new);
 app.post('/elections/new', election.create);
 
 
-app.get('/dashboard', election.dashboard);
-app.get('/election/:url_friendly', candidates.all);
-app.post('/vote/:candidateId/:electionId', election.vote);
-
-app.get('/finalizar_eleicao/:electionId', candidates.votes);
-
-app.get('/results/:url_friendly', election.result);
-app.post('/election/end/:electionId', election.end);
 
 app.listen(3000, function () {
   console.log('server listening on port 3000!');
